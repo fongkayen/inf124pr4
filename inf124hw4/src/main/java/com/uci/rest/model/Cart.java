@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.uci.rest.model;
+
 import java.util.ArrayList;
 
 /**
@@ -17,6 +18,6 @@ public class Cart {
         
     }
     public void addOrder(Order order){
-        orders.add(new Order(order));
+        orders.add(order);
     }
 }

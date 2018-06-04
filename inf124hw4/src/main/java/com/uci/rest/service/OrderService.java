@@ -9,8 +9,6 @@ import com.uci.rest.model.Cart;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class OrderService {
@@ -29,24 +27,24 @@ public class OrderService {
                     myCart.addOrder(new Order());
 
                     Order order = new Order();
-                    order.setCartid(resultSet.getInt("cart_id"));
-                    order.setProductid(resultSet.getInt("product_id"));
+                    order.setCartID(resultSet.getInt("cart_id"));
+                    order.setProductID(resultSet.getInt("product_id"));
                     order.setPrice(resultSet.getInt("price"));
-                    order.setFirstname(resultSet.getInt("first_name"));
-                    order.setLastname(resultSet.getInt("last_name"));
-                    order.setEmail(resultSet.getInt("email"));
-                    order.setAddress1(resultSet.getInt("address_one"));
-                    order.setAddress2(resultSet.getInt("address_two"));
-                    order.setState(resultSet.getInt("state"));
-                    order.setCity(resultSet.getInt("city"));
-                    order.setZipcode(resultSet.getInt("zipcode"));
-                    order.setPhone(resultSet.getInt("phone"));
-                    order.setDeliverymethod(resultSet.getInt("delivery_method"));
-                    order.setNameoncard(resultSet.getInt("name_on_card"));
-                    order.setCardnumber(resultSet.getInt("card_number"));
-                    order.setExpirymonth(resultSet.getInt("expiry_month"));
-                    order.setExpiryyear(resultSet.getInt("expiry_year"));
-                    order.setSecuritycode(resultSet.getInt("security_code"));
+                    order.setFirstName(resultSet.getString("first_name"));
+                    order.setLastName(resultSet.getString("last_name"));
+                    order.setEmail(resultSet.getString("email"));
+                    order.setAddress1(resultSet.getString("address_one"));
+                    order.setAddress2(resultSet.getString("address_two"));
+                    order.setState(resultSet.getString("state"));
+                    order.setCity(resultSet.getString("city"));
+                    order.setZipcode(resultSet.getString("zipcode"));
+                    order.setPhone(resultSet.getString("phone"));
+                    order.setDeliverymethod(resultSet.getString("delivery_method"));
+                    order.setNameoncard(resultSet.getString("name_on_card"));
+                    order.setCardnumber(resultSet.getString("card_number"));
+                    order.setExpirymonth(resultSet.getString("expiry_month"));
+                    order.setExpiryyear(resultSet.getString("expiry_year"));
+                    order.setSecuritycode(resultSet.getString("security_code"));
                     
                     myCart.addOrder(order);
                 }
@@ -105,10 +103,10 @@ public class OrderService {
                 + "state, city, zipcode, phone, delivery_method, name_on_card, card_number, expiry_month, expiry_year, security_code)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection connection = DatabaseConnector.getConnection();
-        return DatabaseUtils.performDBUpdate(connection, sql, order.getCartid(), order.getProductid(),
-                order.getPrice(), order.getFirstname(), order.getLastname(), order.getEmail(), order.getAddress1(),
+        return DatabaseUtils.performDBUpdate(connection, sql, Integer.toString(order.getCartID()), Integer.toString(order.getProductID()),
+                Integer.toString(order.getPrice()), order.getFirstName(), order.getLastName(), order.getEmail(), order.getAddress1(),
                 order.getAddress2(), order.getState(), order.getCity(), order.getZipcode(), order.getPhone(), order.getDeliverymethod(),
-                order.getNameoncard(), order.getCardnumber(), order.getExpirymonth(), order.getExpiryyea(), order.getSecuritycode()); //Kayen copy-paste params
+                order.getNameoncard(), order.getCardnumber(), order.getExpirymonth(), order.getExpiryyear(), order.getSecuritycode()); //Kayen copy-paste params
 
     }
 
@@ -119,9 +117,10 @@ public class OrderService {
 
         Connection connection = DatabaseConnector.getConnection();
 
-        boolean updateStatus = DatabaseUtils.performDBUpdate(connection, sql, todo.getSummary(), todo.getDescription(),
-                String.valueOf(todo.getId())); //Kayen copy-paste params
-
+        boolean updateStatus = DatabaseUtils.performDBUpdate(connection, sql, Integer.toString(order.getCartID()), Integer.toString(order.getProductID()),
+                Integer.toString(order.getPrice()), order.getFirstName(), order.getLastName(), order.getEmail(), order.getAddress1(),
+                order.getAddress2(), order.getState(), order.getCity(), order.getZipcode(), order.getPhone(), order.getDeliverymethod(),
+                order.getNameoncard(), order.getCardnumber(), order.getExpirymonth(), order.getExpiryyear(), order.getSecuritycode());
         try {
             connection.close();
         } catch (SQLException e) {

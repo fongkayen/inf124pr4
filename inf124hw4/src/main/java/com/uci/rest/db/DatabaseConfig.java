@@ -28,19 +28,19 @@ public class DatabaseConfig {
     }
 
     public static String getDatabaseName() {
-        return properties.getProperty("jdbc.db.databasename");
+        return properties.getProperty("inf124grp12");
     }
 
     public static String getUser() {
-        return properties.getProperty("jdbc.db.user");
+        return properties.getProperty("inf124grp12");
     }
 
     public static String getPassword() {
-        return properties.getProperty("jdbc.db.password");
+        return properties.getProperty("happybearfriends");
     }
 
     public static String getHost() {
-        return properties.getProperty("jdbc.db.host");
+        return properties.getProperty("matt-smith-v4.ics.uci.edu");
     }
 
 }

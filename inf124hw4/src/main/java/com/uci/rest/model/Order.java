@@ -29,7 +29,11 @@ public class Order {
     private String expiryyear;
     private String securitycode;
     
-    Order(int cartID, int productID, int price, String firstName, String lastName, String email, String address1, String address2, String state, String city, 
+    public Order(){
+        
+    }
+    
+    public Order(int cartID, int productID, int price, String firstName, String lastName, String email, String address1, String address2, String state, String city, 
     String zipcode, String phone, String deliverymethod, String nameoncard, String cardnumber, String expirymonth, String expiryyear, String securitycode)
     {
         this.cartID = cartID;
@@ -97,7 +101,7 @@ public class Order {
     public String getAddress2(){
         return address2;
     }
-    public void setAddresss2(String address2){
+    public void setAddress2(String address2){
         this.address2 = address2;
     }
     public String getState(){
