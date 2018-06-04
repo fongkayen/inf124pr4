@@ -4,6 +4,7 @@ package com.uci.rest;
  * Created by tariqibrahim on 5/28/17.
  */
 import com.uci.rest.model.Cart;
+import com.uci.rest.model.Plushie;
 import com.uci.rest.service.OrderService;
 
 import javax.ws.rs.*;
@@ -40,7 +41,7 @@ public class OrderResource {
     @Produces( { MediaType.APPLICATION_JSON }) //This provides only JSON responses
     public Response getProductById(@PathParam("plushie_id") int id/* The {id} placeholder parameter is resolved */) {
         //invokes the DB method which will fetch a todo_list item object by id
-        Product product = OrderService.getProductById(id);
+        Plushie product = OrderService.getProductById(id);
 
         //Respond with a 404 if there is no such todo_list item for the id provided
         if(product == null) {
@@ -55,7 +56,7 @@ public class OrderResource {
     @GET
     @Produces( { MediaType.APPLICATION_JSON })
     public Response getAllPlushies() {
-        List<Product> productList = OrderService.getAllProducts();
+        List<Plushie> productList = OrderService.getAllProducts();
 
         if(productList == null || productList.isEmpty()) {
 

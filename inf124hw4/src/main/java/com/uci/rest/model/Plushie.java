@@ -20,6 +20,10 @@ public class Plushie {
     private int num_stock;
     private String made_in;
     
+    public Plushie(){
+        
+    }
+    
     public Plushie(int plushie_id, String name, String description, String about, int price, String material, String in_stock, int num_stock, String made_in){
         this.plushie_id = plushie_id;
         this.name = name;

@@ -4,6 +4,7 @@ import com.uci.rest.db.DatabaseConnector;
 import com.uci.rest.db.DatabaseUtils;
 import com.uci.rest.model.Todo;
 import com.uci.rest.model.Order;
+import com.uci.rest.model.Plushie;
 import com.uci.rest.model.Cart;
 
 import java.sql.Connection;
@@ -65,24 +66,24 @@ public class OrderService {
         return myCart;
     }
 
-    public Product getProductById(int id){
+    public static Plushie getProductById(int id){
         Connection connection = DatabaseConnector.getConnection();
         ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_PRODUCTS_QUERY + " WHERE PLUSHIE_ID = " + id);
 
         if (resultSet != null) {
             try {
                 while (resultSet.next()) {
-                    Product product = new Product();
+                    Plushie product = new Plushie();
 
-                    product.setPlushieID(resultSet.getInt('plushie_id'));
-                    product.setName(resultSet.getString('name'));
-                    product.setDescription(resultSet.getString('description'));
-                    product.setAbout(resultSet.getString('about'));
-                    product.setPrice(resultSet.getInt('price'));
-                    product.setMaterial(resultSet.getString('material'));
-                    product.setInStock(resultSet.getString('in_stock'));
-                    product.setNumStock(resultSet.getInt('num_stock'));
-                    product.setMadeIn(resultSet.getString('made_in'));
+                    product.setPlushie_id(resultSet.getInt("plushie_id"));
+                    product.setName(resultSet.getString("name"));
+                    product.setDescription(resultSet.getString("description"));
+                    product.setAbout(resultSet.getString("about"));
+                    product.setPrice(resultSet.getInt("price"));
+                    product.setMaterial(resultSet.getString("material"));
+                    product.setIn_stock(resultSet.getString("in_stock"));
+                    product.setNum_stock(resultSet.getInt("num_stock"));
+                    product.setMade_in(resultSet.getString("made_in"));
                     
                     return product;
                 }
@@ -100,8 +101,8 @@ public class OrderService {
 
         return null;
     }
-    public static List<Todo> getAllProducts() {
-        List<Product> products = new ArrayList<Product>();
+    public static List<Plushie> getAllProducts() {
+        List<Plushie> products = new ArrayList<Plushie>();
 
         Connection connection = DatabaseConnector.getConnection();
         ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_PRODUCTS_QUERY);
@@ -109,17 +110,17 @@ public class OrderService {
         if (resultSet != null) {
             try {
                 while (resultSet.next()) {
-                    Product product = new Product();
+                    Plushie product = new Plushie();
 
-                    product.setPlushieID(resultSet.getInt('plushie_id'));
-                    product.setName(resultSet.getString('name'));
-                    product.setDescription(resultSet.getString('description'));
-                    product.setAbout(resultSet.getString('about'));
-                    product.setPrice(resultSet.getInt('price'));
-                    product.setMaterial(resultSet.getString('material'));
-                    product.setInStock(resultSet.getString('in_stock'));
-                    product.setNumStock(resultSet.getInt('num_stock'));
-                    product.setMadeIn(resultSet.getString('made_in'));
+                    product.setPlushie_id(resultSet.getInt("plushie_id"));
+                    product.setName(resultSet.getString("name"));
+                    product.setDescription(resultSet.getString("description"));
+                    product.setAbout(resultSet.getString("about"));
+                    product.setPrice(resultSet.getInt("price"));
+                    product.setMaterial(resultSet.getString("material"));
+                    product.setIn_stock(resultSet.getString("in_stock"));
+                    product.setNum_stock(resultSet.getInt("num_stock"));
+                    product.setMade_in(resultSet.getString("made_in"));
                     
                     products.add(product);
                 }

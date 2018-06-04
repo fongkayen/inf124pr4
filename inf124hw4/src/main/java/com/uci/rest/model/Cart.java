@@ -12,10 +12,10 @@ import java.util.ArrayList;
  * @author Nerianne
  */
 public class Cart {
-    private ArrayList<Order> orders = new ArrayList<Order>();
+    private ArrayList<Order> orders;
     
     public Cart(){
-        
+        orders = new ArrayList<Order>();
     }
     public void addOrder(Order order){
         orders.add(order);
