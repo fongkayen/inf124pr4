@@ -9,10 +9,12 @@ import com.uci.rest.model.Cart;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.List;
+import java.util.ArrayList;
 
 public class OrderService {
     private final static String ALL_ORDERS_QUERY = "SELECT * FROM ORDERS";
+    private final static String ALL_PRODUCTS_QUERY = "SELECT * FROM PLUSHIES";
 
     public static Cart getOrderByCartId(int id) {
         //Get a new connection object before going forward with the JDBC invocation.
@@ -48,8 +50,42 @@ public class OrderService {
                     
                     myCart.addOrder(order);
                 }
-                
-                return myCart;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    // We will always close the connection once we are done interacting with the Database.
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return myCart;
+    }
+
+    public Product getProductById(int id){
+        Connection connection = DatabaseConnector.getConnection();
+        ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_PRODUCTS_QUERY + " WHERE PLUSHIE_ID = " + id);
+
+        if (resultSet != null) {
+            try {
+                while (resultSet.next()) {
+                    Product product = new Product();
+
+                    product.setPlushieID(resultSet.getInt('plushie_id'));
+                    product.setName(resultSet.getString('name'));
+                    product.setDescription(resultSet.getString('description'));
+                    product.setAbout(resultSet.getString('about'));
+                    product.setPrice(resultSet.getInt('price'));
+                    product.setMaterial(resultSet.getString('material'));
+                    product.setInStock(resultSet.getString('in_stock'));
+                    product.setNumStock(resultSet.getInt('num_stock'));
+                    product.setMadeIn(resultSet.getString('made_in'));
+                    
+                    return product;
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
@@ -64,38 +100,42 @@ public class OrderService {
 
         return null;
     }
+    public static List<Todo> getAllProducts() {
+        List<Product> products = new ArrayList<Product>();
 
-//    public static List<Todo> getAllTodos() {
-//        List<Todo> todos = new ArrayList<Todo>();
-//
-//        Connection connection = DatabaseConnector.getConnection();
-//        ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_ORDERS_QUERY);
-//
-//        if (resultSet != null) {
-//            try {
-//                while (resultSet.next()) {
-//                    Todo todo = new Todo();
-//
-//                    todo.setId(resultSet.getInt("TODO_ID"));
-//                    todo.setDescription(resultSet.getString("TODO_DESC"));
-//                    todo.setSummary(resultSet.getString("TODO_SUMMARY"));
-//
-//                    todos.add(todo);
-//
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            } finally {
-//                try {
-//                    connection.close();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//
-//        return todos;
-//    }
+        Connection connection = DatabaseConnector.getConnection();
+        ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_PRODUCTS_QUERY);
+
+        if (resultSet != null) {
+            try {
+                while (resultSet.next()) {
+                    Product product = new Product();
+
+                    product.setPlushieID(resultSet.getInt('plushie_id'));
+                    product.setName(resultSet.getString('name'));
+                    product.setDescription(resultSet.getString('description'));
+                    product.setAbout(resultSet.getString('about'));
+                    product.setPrice(resultSet.getInt('price'));
+                    product.setMaterial(resultSet.getString('material'));
+                    product.setInStock(resultSet.getString('in_stock'));
+                    product.setNumStock(resultSet.getInt('num_stock'));
+                    product.setMadeIn(resultSet.getString('made_in'));
+                    
+                    products.add(product);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return products;
+    }
 
     public static boolean AddOrder(Order order) {
 
