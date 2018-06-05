@@ -140,10 +140,10 @@ public class OrderResource {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public Response updateOrder(@PathParam("cart_id") int cart_id, @PathParam("order_id") int order_id, Order order) {
+    public Response updateOrder(@PathParam("cart_id") int cartID, @PathParam("order_id") int order_id, Order order) {
 
         // Retrieve the todo that you will need to change
-        Order retrievedOrder = OrderService.getOrder(cart_id, order_id);
+        Order retrievedOrder = OrderService.getOrder(cartID, order_id);
 
         if(retrievedOrder == null) {
             //If not found then respond with a 404 response.
@@ -152,23 +152,63 @@ public class OrderResource {
         }
 
         // This is the todo_object retrieved from the json request sent.
-        order.setCartID(cart_id);
+        order.setCartID(cartID);
+
 
         // if the user has provided null, then we set the retrieved values.
         // This is done so that a null value is not passed to the todo object when updating it.
-        if(order.getCartID() == null) {
-            order.setCartID(retrievedOrder.getCartID);
+        if(order.getFirstName() == null) {
+            order.setFirstName(retrievedOrder.getFirstName());
+        }
+        if (order.getLastName() == null) {
+            order.setLastName(retrievedOrder.getLastName());
+        }
+        if (order.getEmail() == null) {
+            order.setEmail(retrievedOrder.getEmail());
+        }
+        if (order.getAddress1() == null) {
+            order.setAddress1(retrievedOrder.getAddress1());
+        }
+        if (order.getAddress2() == null) {
+            order.setAddress2(retrievedOrder.getAddress2());
+        }
+        if (order.getState() == null) {
+            order.setState(retrievedOrder.getState());
+        }
+        if (order.getCity() == null) {
+            order.setCity(retrievedOrder.getCity());
+        }
+        if (order.getZipcode() == null) {
+            order.setZipcode(retrievedOrder.getZipcode());
+        }
+        if (order.getPhone() == null) {
+            order.setPhone(retrievedOrder.getPhone());
+        }
+        if (order.getDeliverymethod() == null) {
+            order.setDeliverymethod(retrievedOrder.getDeliverymethod());
+        }
+        if (order.getNameoncard() == null) {
+            order.setNameoncard(retrievedOrder.getNameoncard());
+        }
+        if (order.getCardnumber() == null) {
+            order.setCardnumber(retrievedOrder.getCardnumber());
+        }
+        if (order.getExpirymonth() == null) {
+            order.setExpirymonth(retrievedOrder.getExpirymonth());
+        }
+        if (order.getExpiryyear() == null) {
+            order.setExpiryyear(retrievedOrder.getExpiryyear());
+        }
+        if (order.getSecuritycode() == null) {
+            order.setSecuritycode(retrievedOrder.getSecuritycode());
         }
 
         //Same as above. We only change fields in the todo_resource when the user has entered something in a request.
-        if (todo.getSummary() == null) {
-            todo.setSummary(retrievedTodo.getSummary());
-        }
 
         //This calls the JDBC method which in turn calls the the UPDATE SQL command
         if(OrderService.updateOrder(order)) {
 
-            return Response.ok().entity(todo).build();
+            return Response.ok().entity(order).build();
         }
 
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
