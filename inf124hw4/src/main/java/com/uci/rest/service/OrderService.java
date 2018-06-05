@@ -1,5 +1,6 @@
 package com.uci.rest.service;
 
+import com.uci.rest.db.Database;
 import com.uci.rest.db.DatabaseConnector;
 import com.uci.rest.db.DatabaseUtils;
 import com.uci.rest.model.Order;
@@ -15,10 +16,11 @@ import java.util.ArrayList;
 public class OrderService {
     private final static String ALL_ORDERS_QUERY = "SELECT * FROM ORDERS";
     private final static String ALL_PRODUCTS_QUERY = "SELECT * FROM PLUSHIES";
+    private static Database db = new Database();
 
     public static Cart getOrderByCartId(int id) {
         //Get a new connection object before going forward with the JDBC invocation.
-        Connection connection = DatabaseConnector.getConnection();
+        Connection connection = db.getConnection();
         System.out.println("Connection established");
         ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_ORDERS_QUERY + " WHERE CART_ID = " + id);
 
@@ -67,7 +69,7 @@ public class OrderService {
     }
 
     public static Plushie getProductById(int id){
-        Connection connection = DatabaseConnector.getConnection();
+        Connection connection = db.getConnection();
         ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_PRODUCTS_QUERY + " WHERE PLUSHIE_ID = " + id);
 
         if (resultSet != null) {
@@ -104,7 +106,7 @@ public class OrderService {
     public static List<Plushie> getAllProducts() {
         List<Plushie> products = new ArrayList<Plushie>();
 
-        Connection connection = DatabaseConnector.getConnection();
+        Connection connection = db.getConnection();
         ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_PRODUCTS_QUERY);
 
         if (resultSet != null) {
@@ -142,7 +144,7 @@ public class OrderService {
         String sql = "INSERT INTO ORDERS  (cart_id, product_id, price, first_name, last_name, email, address_one, address_two,"
                 + "state, city, zipcode, phone, delivery_method, name_on_card, card_number, expiry_month, expiry_year, security_code)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        Connection connection = DatabaseConnector.getConnection();
+        Connection connection = db.getConnection();
         return DatabaseUtils.performDBUpdate(connection, sql, Integer.toString(order.getCartID()), Integer.toString(order.getProductID()),
                 Integer.toString(order.getPrice()), order.getFirstName(), order.getLastName(), order.getEmail(), order.getAddress1(),
                 order.getAddress2(), order.getState(), order.getCity(), order.getZipcode(), order.getPhone(), order.getDeliverymethod(),
@@ -151,7 +153,7 @@ public class OrderService {
     }
 
     public static Order getOrder(int cart_id, int order_id){
-        Connection connection = DatabaseConnector.getConnection();
+        Connection connection = db.getConnection();
         ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_ORDERS_QUERY + " WHERE CART_ID = " + cart_id + " AND ORDER_ID = " + order_id);
 
         if (resultSet != null) {
@@ -198,7 +200,7 @@ public class OrderService {
         String sql = "UPDATE ORDERS SET cart_id=?, product_id=?, price=?, first_name=?, last_name=?, email=?, address_one=?, address_two=?,"
                 + "state=?, city=?, zipcode=?, phone=?, delivery_method=?, name_on_card=?, card_number=?, expiry_month=?, expiry_year=?, security_code=?;";
 
-        Connection connection = DatabaseConnector.getConnection();
+        Connection connection = db.getConnection();
 
         boolean updateStatus = DatabaseUtils.performDBUpdate(connection, sql, Integer.toString(order.getCartID()), Integer.toString(order.getProductID()),
                 Integer.toString(order.getPrice()), order.getFirstName(), order.getLastName(), order.getEmail(), order.getAddress1(),
@@ -216,7 +218,7 @@ public class OrderService {
 
     public static boolean deleteOrder(Order retrievedOrder) {
         String sql = "DELETE FROM ORDERS WHERE CART_ID=? AND ORDER_ID=?;";
-        Connection connection = DatabaseConnector.getConnection();
+        Connection connection = db.getConnection();
 
         boolean updateStatus = DatabaseUtils.performDBUpdate(connection, sql, String.valueOf(retrievedOrder.getCartID()), String.valueOf(retrievedOrder.getProductID()));
 
