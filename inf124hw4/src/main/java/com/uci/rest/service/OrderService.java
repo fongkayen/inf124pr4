@@ -2,7 +2,6 @@ package com.uci.rest.service;
 
 import com.uci.rest.db.DatabaseConnector;
 import com.uci.rest.db.DatabaseUtils;
-import com.uci.rest.model.Todo;
 import com.uci.rest.model.Order;
 import com.uci.rest.model.Plushie;
 import com.uci.rest.model.Cart;
@@ -214,13 +213,11 @@ public class OrderService {
 
     }
 
-    public static boolean deleteOrder(Todo retrievedTodo) {
-
-        String sql = "DELETE FROM TODOS WHERE TODO_ID=?;";
-
+    public static boolean deleteOrder(Order retrievedOrder) {
+        String sql = "DELETE FROM ORDERS WHERE CART_ID=? AND ORDER_ID=?;";
         Connection connection = DatabaseConnector.getConnection();
 
-        boolean updateStatus = DatabaseUtils.performDBUpdate(connection, sql, String.valueOf(retrievedTodo.getId()));
+        boolean updateStatus = DatabaseUtils.performDBUpdate(connection, sql, String.valueOf(retrievedOrder.getCartID()), String.valueOf(retrievedOrder.getProductID()));
 
         try {
             connection.close();
