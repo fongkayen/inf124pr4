@@ -28,11 +28,11 @@ public class DatabaseConfig {
     }
 
     public static String getDatabaseName() {
-        return properties.getProperty("inf124grp12");
+        return properties.getProperty("inf124grp012");
     }
 
     public static String getUser() {
-        return properties.getProperty("inf124grp12");
+        return properties.getProperty("inf124grp012");
     }
 
     public static String getPassword() {

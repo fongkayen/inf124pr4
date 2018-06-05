@@ -21,7 +21,7 @@ import java.util.List;
 @Path("/orders")
 public class OrderResource {
     //This method represents an endpoint with the URL /todos/{id} and a GET request ( Note that {id} is a placeholder for a path parameter)
-    @Path("cart_id")
+    @Path("{cart_id}")
     @GET
     @Produces( { MediaType.APPLICATION_JSON }) //This provides only JSON responses
     public Response getOrderByCartId(@PathParam("cart_id") int id/* The {id} placeholder parameter is resolved */) {

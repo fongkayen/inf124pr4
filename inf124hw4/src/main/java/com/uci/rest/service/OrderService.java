@@ -19,6 +19,7 @@ public class OrderService {
     public static Cart getOrderByCartId(int id) {
         //Get a new connection object before going forward with the JDBC invocation.
         Connection connection = DatabaseConnector.getConnection();
+        System.out.println("Connection established");
         ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_ORDERS_QUERY + " WHERE CART_ID = " + id);
 
         Cart myCart = new Cart();
