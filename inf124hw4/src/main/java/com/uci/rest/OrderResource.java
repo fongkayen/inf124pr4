@@ -220,20 +220,20 @@ public class OrderResource {
     @DELETE
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON})
-    public Response deleteTodo(@PathParam("id") int id) {
+    public Response deleteOrder(@PathParam("cart_id") int cart_id, @PathParam("order_id") int order_id) {
 
         //Retrieve the todo_object that you want to delete.
-        Todo retrievedTodo = TodoService.getTodoById(id);
+        Order retrievedOrder = OrderService.getOrder(cart_id, order_id);
 
-        if(retrievedTodo == null) {
+        if(retrievedOrder == null) {
             //If not found throw a 404
             return Response.status(Response.Status.NOT_FOUND).
                     entity("We could not find the requested resource").build();
         }
 
         // This calls the JDBC method which in turn calls the DELETE SQL command.
-        if(TodoService.deleteTodo(retrievedTodo)) {
-            return Response.ok().entity("TODO Deleted Successfully").build();
+        if(OrderService.deleteOrder(retrievedOrder)) {
+            return Response.ok().entity("Order Deleted Successfully").build();
         }
 
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
