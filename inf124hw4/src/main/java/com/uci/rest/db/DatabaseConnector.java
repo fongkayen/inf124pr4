@@ -24,7 +24,7 @@ public class DatabaseConnector {
         }
         try {
 //            return DriverManager.getConnection("jdbc:mysql://" + getHost() + "/" + getDatabaseName(), getUser(), getPassword());
-            return DriverManager.getConnection("jdbc:mysql://matt-smith-v4.ics.uci.edu/inf124grp012", "inf124grp012", "happybearfriends");
+            return DriverManager.getConnection("jdbc:mysql://matt-smith-v4.ics.uci.edu/inf124grp012" + "?useSSL=FALSE&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "inf124grp012", "happybearfriends");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
