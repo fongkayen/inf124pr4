@@ -150,9 +150,52 @@ public class OrderService {
 
     }
 
-    public static boolean updateTodo(Order order) {
+    public static Order getOrder(int cart_id, int order_id){
+        Connection connection = DatabaseConnector.getConnection();
+        ResultSet resultSet = DatabaseUtils.retrieveQueryResults(connection, ALL_ORDERS_QUERY + " WHERE CART_ID = " + cart_id + " AND ORDER_ID = " + order_id);
 
-        String sql = "UPDATE TODOS SET cart_id=?, product_id=?, price=?, first_name=?, last_name=?, email=?, address_one=?, address_two=?,"
+        if (resultSet != null) {
+            try {
+                while (resultSet.next()) {
+                    Order order = new Order();
+
+                    order.setCartID(resultSet.getInt("cart_id"));
+                    order.setProductID(resultSet.getInt("product_id"));
+                    order.setPrice(resultSet.getInt("price"));
+                    order.setFirstName(resultSet.getString("first_name"));
+                    order.setLastName(resultSet.getString("last_name"));
+                    order.setEmail(resultSet.getString("email"));
+                    order.setAddress1(resultSet.getString("address_one"));
+                    order.setAddress2(resultSet.getString("address_two"));
+                    order.setState(resultSet.getString("state"));
+                    order.setCity(resultSet.getString("city"));
+                    order.setZipcode(resultSet.getString("zipcode"));
+                    order.setPhone(resultSet.getString("phone"));
+                    order.setDeliverymethod(resultSet.getString("delivery_method"));
+                    order.setNameoncard(resultSet.getString("name_on_card"));
+                    order.setCardnumber(resultSet.getString("card_number"));
+                    order.setExpirymonth(resultSet.getString("expiry_month"));
+                    order.setExpiryyear(resultSet.getString("expiry_year"));
+                    order.setSecuritycode(resultSet.getString("security_code"));
+                    
+                    return order;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    // We will always close the connection once we are done interacting with the Database.
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return null;
+    }
+    public static boolean updateOrder(Order order) {
+        String sql = "UPDATE ORDERS SET cart_id=?, product_id=?, price=?, first_name=?, last_name=?, email=?, address_one=?, address_two=?,"
                 + "state=?, city=?, zipcode=?, phone=?, delivery_method=?, name_on_card=?, card_number=?, expiry_month=?, expiry_year=?, security_code=?;";
 
         Connection connection = DatabaseConnector.getConnection();
@@ -171,7 +214,7 @@ public class OrderService {
 
     }
 
-    public static boolean deleteTodo(Todo retrievedTodo) {
+    public static boolean deleteOrder(Todo retrievedTodo) {
 
         String sql = "DELETE FROM TODOS WHERE TODO_ID=?;";
 

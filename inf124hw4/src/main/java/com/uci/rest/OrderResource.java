@@ -109,24 +109,24 @@ public class OrderResource {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public Response updateTodo(@PathParam("id") int id, Todo todo) {
+    public Response updateOrder(@PathParam("cart_id") int cart_id, @PathParam("order_id") int order_id, Order order) {
 
         // Retrieve the todo that you will need to change
-        Todo retrievedTodo = TodoService.getTodoById(id);
+        Order retrievedOrder = OrderService.getOrder(cart_id, order_id);
 
-        if(retrievedTodo == null) {
+        if(retrievedOrder == null) {
             //If not found then respond with a 404 response.
             return Response.status(Response.Status.NOT_FOUND).
                     entity("We could not find the requested resource").build();
         }
 
         // This is the todo_object retrieved from the json request sent.
-        todo.setId(id);
+        order.setCartID(cart_id);
 
         // if the user has provided null, then we set the retrieved values.
         // This is done so that a null value is not passed to the todo object when updating it.
-        if(todo.getDescription() == null) {
-            todo.setDescription(retrievedTodo.getDescription());
+        if(order.getCartID() == null) {
+            order.setCartID(retrievedOrder.getCartID);
         }
 
         //Same as above. We only change fields in the todo_resource when the user has entered something in a request.
@@ -135,7 +135,7 @@ public class OrderResource {
         }
 
         //This calls the JDBC method which in turn calls the the UPDATE SQL command
-        if(TodoService.updateTodo(todo)) {
+        if(OrderService.updateOrder(order)) {
 
             return Response.ok().entity(todo).build();
         }

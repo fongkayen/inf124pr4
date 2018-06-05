@@ -23,4 +23,10 @@ public class Cart {
     public ArrayList<Order> getOrders(){
         return orders;
     }
+    
+    public void setCartId(int cart_id){
+        for(int i=0; i<orders.size(); ++i){
+            orders.get(i).setCartID(cart_id);
+        }
+    }
 }
