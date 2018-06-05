@@ -126,10 +126,9 @@ public class OrderResource {
         order.setExpiryyear(expiryyear);
         order.setSecuritycode(securitycode);
                 
-
         System.out.println(order);
 
-        if(TodoService.AddTodo(order)) {
+        if(OrderService.AddOrder(order)) {
             return Response.ok().entity("ORDER Added Successfully").build();
         }
 
