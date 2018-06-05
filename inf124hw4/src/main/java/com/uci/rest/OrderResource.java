@@ -87,21 +87,53 @@ public class OrderResource {
     @POST
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED}) //This method accepts form parameters.
     //If you were to send a POST through a form submit, this method would be called.
-    public Response addTodo(@FormParam("summary") String summary,
-                            @FormParam("description") String description) {
-        Todo todo = new Todo();
-        todo.setSummary(summary);
-        todo.setDescription(description);
+    public Response addOrder(@FormParam("cartID") int cartID,
+                            @FormParam("productID") int productID,
+                            @FormParam("price") int price,
+                            @FormParam("firstName") String firstName,
+                            @FormParam("lastName") String lastName,
+                            @FormParam("email") String email,
+                            @FormParam("address1") String address1,
+                            @FormParam("address2") String address2,
+                            @FormParam("state") String state,
+                            @FormParam("city") String city,
+                            @FormParam("zipcode") String zipcode,
+                            @FormParam("phone") String phone,
+                            @FormParam("deliverymethod") String deliverymethod,
+                            @FormParam("nameoncard") String nameoncard,
+                            @FormParam("cardnumber") String cardnumber,
+                            @FormParam("expirymonth") String expirymonth,
+                            @FormParam("expiryyear") String expiryyear,
+                            @FormParam("securitycode") String securitycode) {
+        Order order = new Order();
 
-        System.out.println(todo);
+        order.setCartID(cartID);
+        order.setProductID(productID);
+        order.setPrice(price);
+        order.setFirstName(firstName);
+        order.setLastName(lastName);
+        order.setEmail(email);
+        order.setAddress1(address1);
+        order.setAddress2(address2);
+        order.setState(state);
+        order.setCity(city);
+        order.setZipcode(zipcode);
+        order.setPhone(phone);
+        order.setDeliverymethod(deliverymethod);
+        order.setNameoncard(nameoncard);
+        order.setCardnumber(cardnumber);
+        order.setExpirymonth(expirymonth);
+        order.setExpiryyear(expiryyear);
+        order.setSecuritycode(securitycode);
+                
 
-        if(TodoService.AddTodo(todo)) {
-            return Response.ok().entity("TODO Added Successfully").build();
+        System.out.println(order);
+
+        if(TodoService.AddTodo(order)) {
+            return Response.ok().entity("ORDER Added Successfully").build();
         }
 
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-
-
     }
 
     //This method represents a PUT request where the id is provided as a path parameter and the request body is provided in JSON
