@@ -4,6 +4,7 @@ package com.uci.rest;
  * Created by tariqibrahim on 5/28/17.
  */
 import com.uci.rest.model.Cart;
+import com.uci.rest.model.Order;
 import com.uci.rest.model.Plushie;
 import com.uci.rest.service.OrderService;
 
@@ -69,10 +70,10 @@ public class OrderResource {
     // Since there is no @PathParam mentioned, the /todos as a relative path and a POST request will invoke this method.
     @POST
     @Consumes({MediaType.APPLICATION_JSON}) //This method accepts a request of the JSON type
-    public Response addOrder(Cart cartOrder) {
+    public Response addOrder(Order order) {
 
         //The todo object here is automatically constructed from the json request. Jersey is so cool!
-        if(OrderService.AddOrder(cartOrder)) {
+        if(OrderService.AddOrder(order)) {
             return Response.ok().entity("Order Added Successfully").build();
         }
 
