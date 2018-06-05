@@ -20,4 +20,7 @@ public class Cart {
     public void addOrder(Order order){
         orders.add(order);
     }
+    public ArrayList<Order> getOrders(){
+        return orders;
+    }
 }

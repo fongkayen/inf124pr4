@@ -59,7 +59,7 @@ public class OrderResource {
         List<Plushie> productList = OrderService.getAllProducts();
 
         if(productList == null || productList.isEmpty()) {
-
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         return Response.ok(productList).build();
@@ -69,11 +69,11 @@ public class OrderResource {
     // Since there is no @PathParam mentioned, the /todos as a relative path and a POST request will invoke this method.
     @POST
     @Consumes({MediaType.APPLICATION_JSON}) //This method accepts a request of the JSON type
-    public Response addOrder(Order order) {
+    public Response addOrder(Cart cartOrder) {
 
         //The todo object here is automatically constructed from the json request. Jersey is so cool!
-        if(OrderService.AddOrder(cart)) {
-            return Response.ok().entity("TODO Added Successfully").build();
+        if(OrderService.AddOrder(cartOrder)) {
+            return Response.ok().entity("Order Added Successfully").build();
         }
 
         // Return an Internal Server error because something wrong happened. This should never be executed

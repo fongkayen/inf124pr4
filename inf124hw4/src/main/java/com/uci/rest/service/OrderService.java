@@ -138,17 +138,34 @@ public class OrderService {
         return products;
     }
 
-    public static boolean AddOrder(Order order) {
-
+    public static boolean AddOrder(Cart cart) {
         String sql = "INSERT INTO ORDERS  (cart_id, product_id, price, first_name, last_name, email, address_one, address_two,"
                 + "state, city, zipcode, phone, delivery_method, name_on_card, card_number, expiry_month, expiry_year, security_code)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection connection = DatabaseConnector.getConnection();
-        return DatabaseUtils.performDBUpdate(connection, sql, Integer.toString(order.getCartID()), Integer.toString(order.getProductID()),
-                Integer.toString(order.getPrice()), order.getFirstName(), order.getLastName(), order.getEmail(), order.getAddress1(),
-                order.getAddress2(), order.getState(), order.getCity(), order.getZipcode(), order.getPhone(), order.getDeliverymethod(),
-                order.getNameoncard(), order.getCardnumber(), order.getExpirymonth(), order.getExpiryyear(), order.getSecuritycode()); //Kayen copy-paste params
-
+        
+        for(int i=0; i<cart.getOrders().size(); ++i){
+            DatabaseUtils.performDBUpdate(connection, sql, Integer.toString(
+                    cart.getOrders().get(i).getCartID()), 
+                    Integer.toString(cart.getOrders().get(i).getProductID()),
+                    Integer.toString(cart.getOrders().get(i).getPrice()), 
+                    cart.getOrders().get(i).getFirstName(), 
+                    cart.getOrders().get(i).getLastName(), 
+                    cart.getOrders().get(i).getEmail(), 
+                    cart.getOrders().get(i).getAddress1(),
+                    cart.getOrders().get(i).getAddress2(), 
+                    cart.getOrders().get(i).getState(), 
+                    cart.getOrders().get(i).getCity(), 
+                    cart.getOrders().get(i).getZipcode(), 
+                    cart.getOrders().get(i).getPhone(), 
+                    cart.getOrders().get(i).getDeliverymethod(),
+                    cart.getOrders().get(i).getNameoncard(), 
+                    cart.getOrders().get(i).getCardnumber(), 
+                    cart.getOrders().get(i).getExpirymonth(), 
+                    cart.getOrders().get(i).getExpiryyear(), 
+                    cart.getOrders().get(i).getSecuritycode());
+        }
+        return true;
     }
 
     public static boolean updateTodo(Order order) {
