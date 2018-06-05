@@ -18,7 +18,7 @@ import java.util.List;
  *
  */
 //todos will be the pathsegment that precedes any path segment specified by @Path on a method.
-@Path("/plushies")
+@Path("/orders")
 public class OrderResource {
     //This method represents an endpoint with the URL /todos/{id} and a GET request ( Note that {id} is a placeholder for a path parameter)
     @Path("cart_id")
